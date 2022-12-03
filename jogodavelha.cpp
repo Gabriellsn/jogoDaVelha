@@ -1,3 +1,5 @@
+
+
 #include <iostream>
 #include <stdio.h>
 #include<string.h>
@@ -15,42 +17,61 @@ using namespace std;
 /* variaveis*/ 
 
 int cont = 0, movimentaCursor, inicioJogo = 0, turno = 0, posicaoLinha= 0, posicaoColuna= 0, pontosJogador1 = 0, pontosJogador2 = 0 , vitoria = 0, reseta = 0;
-char matrizMenu[2][1], matrizJogo[3][3], jogador1[20], jogador2[20], matrizPartida1[3][3], matrizPartida2[3][3], matrizPartida3[3][3], matrizVerificadora[3][3];
+char aux, indiceMenu[3] = {' ', '@', ' '}, matrizJogo[3][3], jogador1[20], jogador2[20], matrizPartida1[3][3], matrizPartida2[3][3], matrizPartida3[3][3], matrizVerificadora[3][3];
 
 
-	/*funÃ§oes*/
-	void menuInicial(){
-		printf(" # JOGO DA VELHA #\n \n");
-		printf("     JOGAR\n\n");
-		printf("   instruÃ§oes\n");
-		while(inicioJogo != 1 && inicioJogo != 2){
+	/*funçoes*/
+	void upMenu(){
+		aux = indiceMenu[0];
+		indiceMenu[0] = indiceMenu[1];
+		indiceMenu[1] = indiceMenu[2];
+		indiceMenu[2] = aux;
 		
+	}
+	void downMenu(){
+		aux = indiceMenu[0];
+		indiceMenu[0] = indiceMenu[2];
+		indiceMenu[2] = indiceMenu[1];
+		indiceMenu[1] = aux;
+		
+	}
+	void menuInicial(){
+		printf("*** #JOGO DA VELHA# ***\n");
+		printf("         JOGAR         \n");
+		printf("       instruçoes      \n");
+		printf("       histórico       \n");
+		while(inicioJogo != 1 && inicioJogo != 2){
+				
 		if(!kbhit()){
 			 movimentaCursor = getch();
+			 system("cls");
 			 switch(movimentaCursor){
 			 	case 119:
-			 		matrizMenu[0][0] = '@';
-			 		matrizMenu[1][0] = ' ';
 			 		system("cls");
-			 		printf(" # JOGO DA VELHA #\n \n");
-					printf("     %cJOGAR\n\n", matrizMenu[0][0]);
-					printf("   %cinstruÃ§oes\n",matrizMenu[1][0]);
+			 		upMenu();
+			 	printf("*** #JOGO DA VELHA# ***\n");
+			 	printf("      %c JOGAR         \n",indiceMenu[0]);
+			 	printf("    %c instruçoes      \n",indiceMenu[1]);
+			 	printf("    %c histórico       \n",indiceMenu[2]);
 			 	break;
 			 	
 			 	case 115:
-			 		matrizMenu[1][0] = '@';
-			 		matrizMenu[0][0] = ' ';
 			 		system("cls");
-			 		printf(" # JOGO DA VELHA #\n \n");
-					printf("     %cJOGAR\n\n", matrizMenu[0][0]);
-					printf("   %cinstruÃ§oes\n",matrizMenu[1][0]);
+			 		downMenu();
+	 			printf("*** #JOGO DA VELHA# ***\n");
+			 	printf("      %c JOGAR         \n",indiceMenu[0]);
+			 	printf("    %c instruçoes      \n",indiceMenu[1]);
+			 	printf("    %c histórico       \n",indiceMenu[2]);
+			 		
 				break;
 				
 				case 101:
-					if(matrizMenu[0][0] == '@'){
+					if(indiceMenu[0] == '@'){
 						inicioJogo = 1;
-					}else if(matrizMenu[1][0] == '@'){
+					}else if(indiceMenu[1] == '@'){
 						inicioJogo = 2;
+					}else if(indiceMenu[2] == '@'){
+						inicioJogo = 3;
 					}
 				break;
 			 	}
@@ -63,10 +84,10 @@ char matrizMenu[2][1], matrizJogo[3][3], jogador1[20], jogador2[20], matrizParti
 	void menuOpcoes(){
 		
 		
-			printf("Ola, esse Ã© um jogo da velha feito por Gabriel Lopo para um projeto da faculdade.\n");
-			printf("* Para jogar Ã© muito simples, selecione a linha e a coluna desejada *\n");
-			printf("* E o sistema automaticamente marcara sua opÃ§ao :) *\n");
-			printf("* lembre que o jogo Ã© uma melhor de 3 entao nao desanime se perder uma rodada *\n");
+			printf("Ola, esse é um jogo da velha feito por Gabriel Lopo para um projeto da faculdade.\n");
+			printf("* Para jogar é muito simples, selecione a linha e a coluna desejada *\n");
+			printf("* E o sistema automaticamente marcara sua opçao :) *\n");
+			printf("* lembre que o jogo é uma melhor de 3 entao nao desanime se perder uma rodada *\n");
 			printf("* sua vez sempre sera sinalizada pelo seu nome e pelo simbolo que te representa sendo ele X ou O *\n");
 			
 	}
@@ -92,7 +113,7 @@ char matrizMenu[2][1], matrizJogo[3][3], jogador1[20], jogador2[20], matrizParti
 		printf("escolha a linha desejada: ");
 		scanf("%d", &posicaoLinha);
 		while(!(posicaoLinha <= 2) || !(posicaoLinha >= 0)){
-			printf("valor de posiÃ§ao invalido\n");
+			printf("valor de posiçao invalido\n");
 			printf("escolha a linha desejada: ");
 			scanf("%d", &posicaoLinha);
 		}
@@ -100,7 +121,7 @@ char matrizMenu[2][1], matrizJogo[3][3], jogador1[20], jogador2[20], matrizParti
 			printf("escolha a colua desejada: ");
 			scanf("%d", &posicaoColuna);
 			while(!(posicaoColuna <= 2) || !(posicaoColuna >= 0)){
-				printf("valor de posiÃ§ao invalido\n");
+				printf("valor de posiçao invalido\n");
 				printf("escolha a colua desejada: ");
 				scanf("%d", &posicaoColuna);
 		}
@@ -260,9 +281,12 @@ int main(){
 				menuOpcoes();
 				inicioJogo = 0;
 			}
+			if(inicioJogo == 3){
+				
+			}
 		}
 		
-	/* comeÃ§ando */
+	/* começando */
 	nomeJogadores();
 	partida();
 	for(int i = 0; i < 3; i++){
@@ -293,3 +317,4 @@ int main(){
 	
 	return 0;
 }
+
